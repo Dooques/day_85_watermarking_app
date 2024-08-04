@@ -1,11 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
-
-# Draw on an image
-# with Image.open("assets/jazzy.jpg") as img:
-#     draw = ImageDraw.Draw(img)
-#     draw.line((0,0) + img.size, fill=0)
-#     draw.line((0, img.size[1], img.size[0], 0), fill=0)
-#     img.save('assets/jazzycross.jpg')
+from tkinter import *
+from tkinter import ttk
 
 
 def create_text(w_mark):
@@ -18,18 +13,11 @@ def create_text(w_mark):
         w_m_length = check_length(w_mark)
         txt_cols = txt_size[0] // w_m_length
         txt_rows = txt_size[1] // fnt_size
-        w_m_print_list = []
-        for y in range(0, txt_rows + 2):
-            w_mark = watermark
-            print(w_mark)
-            for x in range(0, txt_cols + 2):
-                print(f'x{x}: {w_m_print_list}')
-                print(type(w_mark))
-                w_m_print_list.append(w_mark + " ")
-                print(w_m_print_list)
-            w_m_print_list.append("\n\n")
-            print(f'y{y}: {w_m_print_list}')
-        w_m_print = ''.join(w_m_print_list)
+        w_m_print = ""
+        for y in range(0, txt_rows):
+            for x in range(0, txt_cols):
+                w_m_print += w_mark + " "
+            w_m_print += "\n\n"
         d.multiline_text((0, 0), w_m_print, font=fnt, fill=(255, 255, 255, 128))
         txt = txt.rotate(45)
         txt = txt.crop((txt_size[0] * 0.25, txt_size[1] * 0.25,
@@ -53,8 +41,20 @@ def check_length(w_mark):
     return total_length
 
 
-watermark = 'dooques'
-watermarked_image = create_text(watermark)
-watermarked_image.save('assets/jazzy_watermarked.png')
+tk = Tk()
+tk.title('Watermarking App')
+tk.configure(width=1080, height=720)
+tk.frame()
+label = Label(text='This is a label')
+label.pack()
+btn = Button(text='Button')
+btn.pack()
+check_button = Checkbutton(text='Check')
+check_button.pack()
+
+tk.mainloop()
 
 
+# watermark = 'dooques'
+# watermarked_image = create_text(watermark)
+# watermarked_image.show()
