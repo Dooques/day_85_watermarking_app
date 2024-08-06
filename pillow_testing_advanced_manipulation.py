@@ -1,7 +1,7 @@
 import os, sys
 from PIL import Image, ImageDraw, ImageFont, PSDraw
 
-file_name = 'jazzy.jpg'
+file_name = 'jazzy.png'
 # with Image.open(f'assets/{file_name}') as img:
 #     img.load()
 #     converted_img = img.transpose(Image.Transpose.ROTATE_90)

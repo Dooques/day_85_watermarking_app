@@ -41,35 +41,35 @@ from tkinter.ttk import *
 # root.mainloop()
 
 
-# # Creating a class that controls application functions
-# class App(Frame):
-#     def __init__(self, master):
-#         # App inherits functions from Frame
-#         super().__init__(master)
-#         self.pack()
-#
-#         # Create Entry object
-#         self.entry_item = Entry()
-#         self.entry_item.pack()
-#
-#         # Create the application variable
-#         self.contents = StringVar()
-#         # Set the value
-#         self.contents.set("this is a variable")
-#         # Tell the entry widget to watch this variable
-#         self.entry_item['textvariable'] = self.contents
-#
-#         # Define a callback for when the user hits return
-#         # It prints the current value of the variable
-#         self.entry_item.bind('<Key-Return>', self.print_contents)
-#
-#     def print_contents(self, event):
-#         print('Hi. The current entry content is: ', self.contents.get())
-#
-#
-# root = Tk()
-# myapp = App(root)
-# myapp.mainloop()
+# Creating a class that controls application functions
+class App(Frame):
+    def __init__(self, master):
+        # App inherits functions from Frame
+        super().__init__(master)
+        self.pack()
+
+        # Create Entry object
+        self.entry_item = Entry()
+        self.entry_item.pack()
+
+        # Create the application variable
+        self.contents = StringVar()
+        # Set the value
+        self.contents.set("this is a variable")
+        # Tell the entry widget to watch this variable
+        self.entry_item['textvariable'] = self.contents
+
+        # Define a callback for when the user hits return
+        # It prints the current value of the variable
+        self.entry_item.bind('<Key-Return>', self.print_contents)
+
+    def print_contents(self, event):
+        print('Hi. The current entry content is: ', self.contents.get())
+
+
+root = Tk()
+myapp = App(root)
+myapp.mainloop()
 
 
 # Controlling the Window Manager (Deprecated on Documentation?)
@@ -93,56 +93,56 @@ from tkinter.ttk import *
 # myapp.mainloop()
 
 
-# Sample widgets
-sample_tk = Tk()
-sample_tk.title('Sample Widgets')
-sample_tk.configure(width=1080, height=720, padx=10, pady=10)
-sample_tk.frame()
-
-btn = Button(text='Button', padding=5)
-btn.pack()
-
-check_button = Checkbutton(text='Check', padding=5)
-check_button.pack()
-
-entry = Entry()
-entry.pack()
-
-frame = Frame()
-frame.pack()
-
-label = Label(text='This is a label', padding=5)
-label.pack()
-
-lbl_frame = LabelFrame(text='Label Frame')
-lbl_frame.pack()
-
-menu_b = Menubutton(text='Menu Button', padding=5)
-menu_b.pack()
-
-paned_window = PanedWindow()
-paned_window.pack()
-
-radio_btn = Radiobutton(text='Radio Button')
-radio_btn_2 = Radiobutton(text='2nd Button')
-radio_btn.pack()
-radio_btn_2.pack()
-
-label_scale = Label(text='Scale')
-label_scale.pack()
-scale = Scale()
-scale.pack()
-
-scroll_label = Label(text='Scroll')
-scroll = Scrollbar()
-scroll.pack()
-
-combobox = ttk.Combobox()
-combobox.pack()
-
-notebook = ttk.Notebook()
-notebook.pack()
-
-
-sample_tk.mainloop()
+# # Sample widgets
+# sample_tk = Tk()
+# sample_tk.title('Sample Widgets')
+# sample_tk.configure(width=1080, height=720, padx=10, pady=10)
+# sample_tk.frame()
+#
+# btn = Button(text='Button', padding=5)
+# btn.pack()
+#
+# check_button = Checkbutton(text='Check', padding=5)
+# check_button.pack()
+#
+# entry = Entry()
+# entry.pack()
+#
+# frame = Frame()
+# frame.pack()
+#
+# label = Label(text='This is a label', padding=5)
+# label.pack()
+#
+# lbl_frame = LabelFrame(text='Label Frame')
+# lbl_frame.pack()
+#
+# menu_b = Menubutton(text='Menu Button', padding=5)
+# menu_b.pack()
+#
+# paned_window = PanedWindow()
+# paned_window.pack()
+#
+# radio_btn = Radiobutton(text='Radio Button')
+# radio_btn_2 = Radiobutton(text='2nd Button')
+# radio_btn.pack()
+# radio_btn_2.pack()
+#
+# label_scale = Label(text='Scale')
+# label_scale.pack()
+# scale = Scale()
+# scale.pack()
+#
+# scroll_label = Label(text='Scroll')
+# scroll = Scrollbar()
+# scroll.pack()
+#
+# combobox = ttk.Combobox()
+# combobox.pack()
+#
+# notebook = ttk.Notebook()
+# notebook.pack()
+#
+#
+# sample_tk.mainloop()
 
