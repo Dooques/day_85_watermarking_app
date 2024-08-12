@@ -42,34 +42,34 @@ from tkinter.ttk import *
 
 
 # Creating a class that controls application functions
-class App(Frame):
-    def __init__(self, master):
-        # App inherits functions from Frame
-        super().__init__(master)
-        self.pack()
-
-        # Create Entry object
-        self.entry_item = Entry()
-        self.entry_item.pack()
-
-        # Create the application variable
-        self.contents = StringVar()
-        # Set the value
-        self.contents.set("this is a variable")
-        # Tell the entry widget to watch this variable
-        self.entry_item['textvariable'] = self.contents
-
-        # Define a callback for when the user hits return
-        # It prints the current value of the variable
-        self.entry_item.bind('<Key-Return>', self.print_contents)
-
-    def print_contents(self, event):
-        print('Hi. The current entry content is: ', self.contents.get())
-
-
-root = Tk()
-myapp = App(root)
-myapp.mainloop()
+# class App(Frame):
+#     def __init__(self, master):
+#         # App inherits functions from Frame
+#         super().__init__(master)
+#         self.pack()
+#
+#         # Create Entry object
+#         self.entry_item = Entry()
+#         self.entry_item.pack()
+#
+#         # Create the application variable
+#         self.contents = StringVar()
+#         # Set the value
+#         self.contents.set("this is a variable")
+#         # Tell the entry widget to watch this variable
+#         self.entry_item['textvariable'] = self.contents
+#
+#         # Define a callback for when the user hits return
+#         # It prints the current value of the variable
+#         self.entry_item.bind('<Key-Return>', self.print_contents)
+#
+#     def print_contents(self, event):
+#         print('Hi. The current entry content is: ', self.contents.get())
+#
+#
+# root = Tk()
+# myapp = App(root)
+# myapp.mainloop()
 
 
 # Controlling the Window Manager (Deprecated on Documentation?)
@@ -145,4 +145,5 @@ myapp.mainloop()
 #
 #
 # sample_tk.mainloop()
+
 
