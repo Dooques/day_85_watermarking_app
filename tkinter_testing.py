@@ -93,57 +93,57 @@ from tkinter.ttk import *
 # myapp.mainloop()
 
 
-# # Sample widgets
-# sample_tk = Tk()
-# sample_tk.title('Sample Widgets')
-# sample_tk.configure(width=1080, height=720, padx=10, pady=10)
-# sample_tk.frame()
-#
-# btn = Button(text='Button', padding=5)
-# btn.pack()
-#
-# check_button = Checkbutton(text='Check', padding=5)
-# check_button.pack()
-#
-# entry = Entry()
-# entry.pack()
-#
-# frame = Frame()
-# frame.pack()
-#
-# label = Label(text='This is a label', padding=5)
-# label.pack()
-#
-# lbl_frame = LabelFrame(text='Label Frame')
-# lbl_frame.pack()
-#
-# menu_b = Menubutton(text='Menu Button', padding=5)
-# menu_b.pack()
-#
-# paned_window = PanedWindow()
-# paned_window.pack()
-#
-# radio_btn = Radiobutton(text='Radio Button')
-# radio_btn_2 = Radiobutton(text='2nd Button')
-# radio_btn.pack()
-# radio_btn_2.pack()
-#
-# label_scale = Label(text='Scale')
-# label_scale.pack()
-# scale = Scale()
-# scale.pack()
-#
-# scroll_label = Label(text='Scroll')
-# scroll = Scrollbar()
-# scroll.pack()
-#
-# combobox = ttk.Combobox()
-# combobox.pack()
-#
-# notebook = ttk.Notebook()
-# notebook.pack()
-#
-#
-# sample_tk.mainloop()
+# Sample widgets
+sample_tk = Tk()
+sample_tk.title('Sample Widgets')
+sample_tk.configure(width=1080, height=720, padx=10, pady=10)
+sample_tk.frame()
+
+btn = Button(text='Button', padding=5)
+btn.pack()
+
+check_button = Checkbutton(text='Check', padding=5)
+check_button.pack()
+
+entry = Entry()
+entry.pack()
+
+frame = Frame()
+frame.pack()
+
+label = Label(text='This is a label', padding=5)
+label.pack()
+
+lbl_frame = LabelFrame(text='Label Frame')
+lbl_frame.pack()
+
+menu_b = Menubutton(text='Menu Button', padding=5)
+menu_b.pack()
+
+paned_window = PanedWindow()
+paned_window.pack()
+
+radio_btn = Radiobutton(text='Radio Button')
+radio_btn_2 = Radiobutton(text='2nd Button')
+radio_btn.pack()
+radio_btn_2.pack()
+
+label_scale = Label(text='Scale')
+label_scale.pack()
+scale = Scale()
+scale.pack()
+
+scroll_label = Label(text='Scroll')
+scroll = Scrollbar()
+scroll.pack()
+
+combobox = ttk.Combobox()
+combobox.pack()
+
+notebook = ttk.Notebook()
+notebook.pack()
+
+
+sample_tk.mainloop()
 
 
