@@ -2,10 +2,6 @@ from tkinter import *
 from tkinter import filedialog, messagebox
 from tkinter.ttk import *
 from PIL import Image, ImageDraw, ImageFont, ImageTk
-from window import WindowFunctions
-
-
-window_func = WindowFunctions()
 
 
 class Watermarker:
@@ -39,9 +35,9 @@ class Watermarker:
         self.event_height = None
 
         # Watermark Settings
-        self.font_types = {'Roboto': 'Roboto-Regular', 'Arial': 'arial', 'Times New Roman': 'times', 'Helvetica':
-                           'helvetica', 'Courier New': 'cour'}
-        self.selected_font = "Roboto-Regular"
+        self.font_types = {'Arial': 'arial', 'Impact': 'impact', 'Times New Roman': 'times', 'Lucida Sans':
+                           'l_10646', 'Courier New': 'cour'}
+        self.selected_font = "arial"
         self.font_size = 40
         print(self.font_types)
         print(self.selected_font)
@@ -99,7 +95,7 @@ class Watermarker:
 
         self.font_scale = Scale(self.font_frame,
                                 command=self.set_font_size,
-                                from_=20, to=200,
+                                from_=20, to=400,
                                 value=50)
         self.font_scale.pack(pady=10)
         self.font_frame.pack(pady=10)
@@ -126,10 +122,25 @@ class Watermarker:
         self.transparency_scale.pack()
         self.transparency_frame.pack(pady=20)
 
+        # Set repeats
+        self.type_variable = IntVar()
+        self.watermark_repeat = Radiobutton(self.settings_frame,
+                                            text='Repeating Watermark',
+                                            command=self.set_type,
+                                            value=0,
+                                            variable=self.type_variable)
+        self.watermark_repeat.pack()
+        self.watermark_single = Radiobutton(self.settings_frame,
+                                            text='Single Watermark',
+                                            command=self.set_type,
+                                            value=1,
+                                            variable=self.type_variable)
+        self.watermark_single.pack()
+
         # Confirm
         self.w_m_confirm = Button(self.settings_frame,
                                   text='Confirm Watermark',
-                                  command=self.create_watermark,
+                                  command=self.check_type,
                                   padding=5, width=button_size,
                                   compound='left')
         self.w_m_confirm.pack(pady=10)
@@ -145,7 +156,7 @@ class Watermarker:
         self.settings_frame.grid(column=0, row=0, sticky='nsew')
 
     def save_to_file(self):
-        types = [('Save as .JPG', '*.jpg'),
+        types = [('JPG File', '*.jpg'),
                  ('All Files', '*.*')]
         file_path = filedialog.asksaveasfilename(title='Save Watermarked File',
                                                  defaultextension='*.jpg',
@@ -157,7 +168,23 @@ class Watermarker:
             converted_image = self.image.convert('RGB')
             converted_image.save(file_path)
         else:
-            pass
+            messagebox.showerror(title='Saving Error',
+                                 message='Please use a .jpg extension to save this file, other formats are not '
+                                         'currently supported.')
+
+    def check_type(self):
+        if self.repeating:
+            self.repeating_watermark()
+        else:
+            self.single_watermark()
+
+    def set_type(self):
+        type_ = self.type_variable.get()
+        print(type_)
+        if type_ == 0:
+            self.repeating = True
+        else:
+            self.repeating = False
 
     def set_transparency(self, event):
         self.transparency = int(round(float(event), 0))
@@ -177,7 +204,12 @@ class Watermarker:
         self.font_label['text'] = f'Font Size: {self.font_size}'
 
     def open_file(self):
-        self.path = filedialog.askopenfile(mode='r')
+        selected_path = filedialog.askopenfile(mode='r')
+        if selected_path:
+            self.path = selected_path
+        else:
+            return None
+        print(self.path)
         if self.path:
             self.process_file()
 
@@ -197,6 +229,20 @@ class Watermarker:
             self.canvas.create_image(0, 0, image=self.tk_image, anchor='nw')
         self.canvas.grid(column=1, columnspan=3, row=0, sticky='nesw')
         self.canvas.bind('<Configure>', self.resize_image)
+
+    def check_length(self):
+        upper = 35
+        lower = 25
+        length_list = []
+        for item in self.w_m_var.get():
+            if item.isupper():
+                length_list.append(upper)
+            else:
+                length_list.append(lower)
+        total_length = 0
+        for item in length_list:
+            total_length += item
+        return total_length
 
     def resize_image(self, event):
         canvas_ratio = event.width / event.height
@@ -220,8 +266,8 @@ class Watermarker:
                                  anchor='center',
                                  image=self.tk_image)
 
-    def create_watermark(self):
-        if self.path is None:
+    def repeating_watermark(self):
+        if self.image is None:
             messagebox.showerror(title='Image Error',
                                  message='No valid image found, please select an image file.')
             return None
@@ -237,13 +283,16 @@ class Watermarker:
             print(f'watermark: {w_mark}')
             txt_size = (base.size[0] * 2, base.size[1] * 2)
             txt = Image.new("RGBA", txt_size, (255, 255, 255, 0))
+
             print(round(self.font_size, 0))
             fnt_size = self.font_size
             font_selected = f"{self.selected_font}.ttf"
             print(font_selected)
             fnt = ImageFont.truetype(font=f'assets/{font_selected}', size=fnt_size)
+
             d = ImageDraw.Draw(txt)
-            w_m_length = window_func.check_length(w_mark)
+
+            w_m_length = self.check_length()
             txt_cols = txt_size[0] // w_m_length
             txt_rows = txt_size[1] // fnt_size
             w_m_print = ""
@@ -251,14 +300,16 @@ class Watermarker:
                 for x in range(0, txt_cols):
                     w_m_print += w_mark + " "
                 w_m_print += "\n\n"
+
             d.multiline_text((0, 0), w_m_print, font=fnt, fill=(255, 255, 255, self.transparency))
             txt = txt.rotate(self.rotation)
             txt = txt.crop((txt_size[0] * 0.25, txt_size[1] * 0.25,
                             txt_size[0] * 0.75, txt_size[1] * 0.75))
+
             self.image = Image.alpha_composite(base, txt)
             self.get_image()
 
-    def advert_watermark(self):
+    def single_watermark(self):
         if self.path is None:
             messagebox.showerror(title='Image Error',
                                  message='No valid image found, please select an image file.')
@@ -273,26 +324,27 @@ class Watermarker:
                                      'Please enter a valid watermark.')
                 return None
             print(f'watermark: {w_mark}')
-            txt_size = (base.size[0] * 2, base.size[1] * 2)
-            txt = Image.new("RGBA", txt_size, (255, 255, 255, 0))
-            print(round(self.font_size, 0))
+
+            txt_box_size = (base.size[0], base.size[1])
+            txt = Image.new("RGBA", txt_box_size, (255, 255, 255, 0))
+
             fnt_size = int(round(self.font_size, 0))
+            print(round(self.font_size, 0))
             font_selected = f"{self.selected_font.lower()}.ttf"
             print(font_selected)
             fnt = ImageFont.truetype(font=f'assets/{font_selected}', size=fnt_size)
+
             d = ImageDraw.Draw(txt)
-            # w_m_length = window_func.check_length(w_mark)
-            # txt_cols = txt_size[0] // w_m_length
-            # txt_rows = txt_size[1] // fnt_size
-            # w_m_print = ""
-            # for y in range(0, txt_rows):
-            #     for x in range(0, txt_cols):
-            #         w_m_print += w_mark + " "
-            #     w_m_print += "\n\n"
-            d.multiline_text((0, 0), w_mark, font=fnt, fill=(255, 255, 255, 128))
-            txt = txt.rotate(45)
-            # txt = txt.crop((txt_size[0] * 0.25, txt_size[1] * 0.25,
-            #                 txt_size[0] * 0.75, txt_size[1] * 0.75))
+
+            text_pos = (base.size[0] * 0.6), (base.size[1] * 0.75)
+            w_m_length = self.check_length()
+            if text_pos[0] + w_m_length > base.size[0]:
+                text_pos = (text_pos[0] - w_m_length, text_pos[1])
+            print(f'image size: {base.size}')
+            print(f'text pos: {text_pos}')
+
+            d.text(xy=text_pos, text=w_mark, font=fnt,
+                   fill=(255, 255, 255, self.transparency))
             self.image = Image.alpha_composite(base, txt)
             self.get_image()
 
